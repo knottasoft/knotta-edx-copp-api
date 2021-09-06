@@ -1,0 +1,15 @@
+minio.local.knotta.ru:80 {
+    reverse_proxy nginx:80
+}
+
+console.minio.local.knotta.ru:80 {
+    reverse_proxy nginx:80
+}
+
+api.local.knotta.ru:80 {
+    reverse_proxy nginx:80
+}
+
+mailhog.local.knotta.ru:80 {
+    reverse_proxy nginx:80
+}
