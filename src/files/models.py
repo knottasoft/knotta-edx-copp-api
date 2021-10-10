@@ -11,10 +11,10 @@ class File(models.Model):
 
     file = models.FileField(blank=False, null=False)
     thumbnail = models.ImageField(blank=True, null=True)
-    author = models.ForeignKey('users.User', related_name='files', on_delete=models.DO_NOTHING)
+    document = models.ForeignKey('docs.Document', related_name='files', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-
+'''
 @receiver(post_delete, sender=File)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.file:
@@ -22,7 +22,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
 
     if instance.thumbnail:
         instance.thumbnail.delete()
-
+'''
 
 @receiver(post_save, sender=File)
 def generate_thumbnail(sender, instance=None, created=False, **kwargs):

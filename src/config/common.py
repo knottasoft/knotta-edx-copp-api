@@ -55,6 +55,7 @@ INSTALLED_APPS = (
     'src.files',
     'src.common',
     'minio_storage',
+    'src.docs'
 
     # Third party optional apps
     # app must be placed somewhere after all the apps that are going to be generating activities
@@ -331,7 +332,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAuthenticated', #IsAuthenticated
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
