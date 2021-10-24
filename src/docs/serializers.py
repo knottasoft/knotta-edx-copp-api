@@ -1,6 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers, permissions
-from .models import Document, DocumentType
+from .models import Document, DocumentType, CourseRunDocType
 from src.files.serializers import FileSerializer
 
 class DocumentSerializer(serializers.ModelSerializer):
@@ -19,3 +19,8 @@ class DocumentTypeSerializer(serializers.ModelSerializer):
     class Meta():
         model = DocumentType
         fields = ('label', 'value', 'description')
+    
+class CourseRunDocTypeSerializer(serializers.ModelSerializer):
+    class Meta():
+        model = CourseRunDocType
+        fields = ('course_id', 'course_run_key', 'doc_types')

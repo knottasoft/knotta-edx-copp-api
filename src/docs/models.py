@@ -11,3 +11,8 @@ class DocumentType(models.Model):
     label = models.CharField(max_length=100, null=False)
     value = models.CharField(max_length=100, null=False)
     description = models.CharField(max_length=250, null=True)
+
+class CourseRunDocType(models.Model):
+    course_id = models.UUIDField(null=False)
+    course_run_key = models.CharField(max_length=100, null=False)
+    doc_types = models.CharField(max_length=200)

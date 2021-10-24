@@ -1,5 +1,5 @@
-from src.docs.serializers import DocumentSerializer, DocumentSerializerWithFiles, DocumentTypeSerializer
-from src.docs.models import Document, DocumentType
+from src.docs.serializers import DocumentSerializer, DocumentSerializerWithFiles, DocumentTypeSerializer, CourseRunDocTypeSerializer
+from src.docs.models import Document, DocumentType, CourseRunDocType
 from rest_framework import viewsets, mixins, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -40,3 +40,25 @@ class DocumentTypeViewset(viewsets.ModelViewSet):
     
     def create(self, request, *args, **kwargs):
         return super().create(request, *args, **kwargs)
+
+class CourseRunDocTypeViewset(viewsets.ModelViewSet):
+    queryset = CourseRunDocType.objects.all()
+    serializer_class = CourseRunDocTypeSerializer
+    permissions = {'default': (IsAuthenticated)}
+
+    def list(self, request, *args, **kwargs):
+        course_id = request.query_params.get('course_id')
+        queryset = CourseRunDocType.objects.all()
+        queryset = queryset.filter(course_id=course_id)
+
+        serializer = CourseRunDocTypeSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def create(self, request):
+        CourseRunDocType.objects.update_or_create(
+            course_id = request.data['course_id'],
+            course_run_key = request.data['course_run_key'],
+            defaults = { 'doc_types' : request.data['doc_types']}
+        )
+        return Response()
+#return super().create(request, *args, **kwargs)
