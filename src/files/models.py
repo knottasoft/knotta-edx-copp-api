@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.signals import post_delete, post_save
+from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
 from easy_thumbnails.exceptions import EasyThumbnailsError
 from easy_thumbnails.files import get_thumbnailer
@@ -14,15 +14,15 @@ class File(models.Model):
     document = models.ForeignKey('docs.Document', related_name='files', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-'''
-@receiver(post_delete, sender=File)
+
+@receiver(pre_delete, sender=File)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.file:
         instance.file.delete()
 
     if instance.thumbnail:
         instance.thumbnail.delete()
-'''
+
 
 @receiver(post_save, sender=File)
 def generate_thumbnail(sender, instance=None, created=False, **kwargs):
