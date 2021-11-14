@@ -14,7 +14,9 @@ class DocumentViewset(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         sid = request.query_params.get('sid')
         queryset = Document.objects.all()
-        queryset = queryset.filter(student_id=sid)
+
+        if sid:
+            queryset = queryset.filter(student_id=sid)
 
         serializer = DocumentSerializerWithFiles(queryset, many=True)
         return Response(serializer.data)
@@ -48,8 +50,15 @@ class CourseRunDocTypeViewset(viewsets.ModelViewSet):
 
     def list(self, request, *args, **kwargs):
         course_id = request.query_params.get('course_id')
+        course_run_key = request.query_params.get('course_run_key')
+        
         queryset = CourseRunDocType.objects.all()
-        queryset = queryset.filter(course_id=course_id)
+        
+        if course_id:
+            queryset = queryset.filter(course_id=course_id)
+
+        if course_run_key:
+            queryset = queryset.filter(course_run_key=course_run_key)
 
         serializer = CourseRunDocTypeSerializer(queryset, many=True)
         return Response(serializer.data)

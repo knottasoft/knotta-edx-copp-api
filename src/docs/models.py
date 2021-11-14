@@ -6,6 +6,9 @@ class Document(models.Model):
     student_id = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=200)
     date_create = models.DateTimeField(auto_now_add=True)
+    expiry_date = models.DateTimeField(null=True)
+    status = models.CharField(max_length=100,  null=True)
+    validation_error = models.CharField(max_length=200,  null=True)
 
 class DocumentType(models.Model):
     label = models.CharField(max_length=100, null=False)
