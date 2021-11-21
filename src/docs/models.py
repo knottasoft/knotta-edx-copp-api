@@ -1,14 +1,20 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
-
 class Document(models.Model):
-    name = models.CharField(max_length=100, null=False)
+    DOC_STATUS = (
+        ('n', 'Нет статуса'),
+        ('v', 'Проверен'),
+        ('r', 'Возвращен'),
+    )
+
+    name = models.CharField(max_length=100, null=False, verbose_name='Наименование')
     student_id = models.CharField(max_length=100, null=True)
-    description = models.CharField(max_length=200)
-    date_create = models.DateTimeField(auto_now_add=True)
-    expiry_date = models.DateTimeField(null=True)
-    status = models.CharField(max_length=100,  null=True)
-    validation_error = models.CharField(max_length=200,  null=True)
+    description = models.CharField(max_length=200, verbose_name='Тип документа')
+    date_create = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    expiry_date = models.DateField(null=True, verbose_name='Действителен до')
+    validation_error = models.CharField(max_length=200,  null=True, blank=True, verbose_name='Замечания проверки')
+    status = models.CharField(max_length=1, choices=DOC_STATUS, blank=True, default='n', verbose_name='Статус', help_text='Состояние проверки документа модератором')
 
 class DocumentType(models.Model):
     label = models.CharField(max_length=100, null=False)
