@@ -15,6 +15,9 @@ class Document(models.Model):
     expiry_date = models.DateField(null=True, verbose_name='Действителен до')
     validation_error = models.CharField(max_length=200,  null=True, blank=True, verbose_name='Замечания проверки')
     status = models.CharField(max_length=1, choices=DOC_STATUS, blank=True, default='n', verbose_name='Статус', help_text='Состояние проверки документа модератором')
+    email = models.CharField(max_length=200, null=True, verbose_name='E-mail')
+    student_fio = models.CharField(max_length=200, null=True, verbose_name='Студент')
+
 
 class DocumentType(models.Model):
     label = models.CharField(max_length=100, null=False)

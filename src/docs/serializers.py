@@ -6,14 +6,14 @@ from src.files.serializers import FileSerializer
 class DocumentSerializer(serializers.ModelSerializer):
     class Meta():
         model = Document
-        fields = ('name', 'description', 'date_create', 'student_id', 'id', 'status', 'expiry_date', 'validation_error')
+        fields = ('name', 'description', 'date_create', 'student_id', 'id', 'status', 'expiry_date', 'validation_error', "email", "student_fio")
 
 class DocumentSerializerWithFiles(serializers.ModelSerializer):
     files = FileSerializer(many=True)
 
     class Meta():
         model = Document
-        fields = ('name', 'description', 'date_create', 'student_id', 'files', 'id', 'status', 'expiry_date', 'validation_error')
+        fields = ('name', 'description', 'date_create', 'student_id', 'files', 'id', 'status', 'expiry_date', 'validation_error', "email", "student_fio")
 
 class DocumentTypeSerializer(serializers.ModelSerializer):
     class Meta():

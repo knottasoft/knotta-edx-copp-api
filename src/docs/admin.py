@@ -19,10 +19,10 @@ class DocFilesInline(admin.StackedInline):
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     empty_value_display = "Нет замечаний"
-    list_display = ("name", "doc_type", "status", "expiry_date", "validation_error", "date_create")
+    list_display = ("name", "doc_type", "email", "student_fio", "status", "expiry_date", "date_create")
     list_filter = ("status", )
-    readonly_fields = ('doc_type', )
-    fields = ("doc_type", "name", "status", "expiry_date", "validation_error")
+    readonly_fields = ('doc_type', "email", "student_fio")
+    fields = ("doc_type", "email", "student_fio", "name", "status", "expiry_date", "validation_error")
     inlines = [DocFilesInline]
 
     def doc_type(self, obj):
