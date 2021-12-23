@@ -20,6 +20,10 @@ class Document(models.Model):
     email = models.CharField(max_length=200, null=True, verbose_name='E-mail')
     student_fio = models.CharField(max_length=200, null=True, verbose_name='Студент')
 
+    class Meta:
+        verbose_name = 'Документ'
+        verbose_name_plural = 'Документы'
+
 class DocumentArchive(models.Model):
     DOC_STATUS = (
         ('n', 'Нет статуса'),
@@ -37,11 +41,19 @@ class DocumentArchive(models.Model):
     email = models.CharField(max_length=200, null=True, verbose_name='E-mail')
     student_fio = models.CharField(max_length=200, null=True, verbose_name='Студент')
 
+    class Meta:
+        verbose_name = 'Архивный документ'
+        verbose_name_plural = 'Архивные документы'
+
 
 class DocumentType(models.Model):
-    label = models.CharField(max_length=100, null=False)
-    value = models.CharField(max_length=100, null=False)
-    description = models.CharField(max_length=250, null=True)
+    label = models.CharField(max_length=100, null=False, verbose_name='Название документа')
+    value = models.CharField(max_length=100, null=False, verbose_name='Системное имя')
+    description = models.CharField(max_length=250, null=True, verbose_name='Описание')
+
+    class Meta:
+        verbose_name = 'Тип документа'
+        verbose_name_plural = 'Типы документов'
 
 class CourseRunDocType(models.Model):
     course_id = models.UUIDField(null=False)

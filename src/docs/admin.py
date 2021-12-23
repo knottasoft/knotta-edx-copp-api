@@ -57,3 +57,9 @@ class DocumentArchiveAdmin(admin.ModelAdmin):
         return result.label
 
     doc_type.short_description = "Тип документа"
+
+@admin.register(DocumentType)
+class DocumentTypeAdmin(admin.ModelAdmin):
+    empty_value_display = "Нет значений"
+    list_display = ("label", "value", "description")
+    fields = ("label", "value", "description")
