@@ -14,15 +14,21 @@ class File(models.Model):
     document = models.ForeignKey('docs.Document', related_name='files', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+class FileArchive(models.Model):
+    THUMBNAIL_SIZE = (360, 360)
 
-@receiver(pre_delete, sender=File)
-def auto_delete_file_on_delete(sender, instance, **kwargs):
+    file = models.FileField(blank=False, null=False)
+    thumbnail = models.ImageField(blank=True, null=True)
+    document = models.ForeignKey('docs.DocumentArchive', related_name='files', on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+@receiver(pre_delete, sender=FileArchive)
+def auto_delete_archive_file_on_delete(sender, instance, **kwargs):
     if instance.file:
         instance.file.delete()
 
     if instance.thumbnail:
         instance.thumbnail.delete()
-
 
 @receiver(post_save, sender=File)
 def generate_thumbnail(sender, instance=None, created=False, **kwargs):
@@ -37,3 +43,18 @@ def generate_thumbnail(sender, instance=None, created=False, **kwargs):
         return
     else:
         instance.thumbnail.save(name=f'small_{instance.file.name}', content=thumbnail)
+
+
+@receiver(post_save, sender=File)
+def copy_to_archive(sender, instance=None, created=False, **kwargs):
+    if created is False:
+        return
+
+    file = FileArchive()
+    file.id = instance.id
+    file.file = instance.file
+    file.thumbnail = instance.thumbnail
+    file.document_id = instance.document_id
+    file.created_at = instance.created_at
+
+    file.save()
